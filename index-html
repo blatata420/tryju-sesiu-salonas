@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - AI & Automatizacija</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #00ffff;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.15s ease, width 0.15s ease, height 0.15s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor-follower {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transition: transform 0.3s ease, width 0.2s ease, height 0.2s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor.click {
+            animation: explode 0.5s ease;
+        }
+
+        @keyframes explode {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(2.5);
+                opacity: 0.5;
+                border-width: 1px;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+                border-width: 2px;
+            }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #00ffff;
+        }
+
+        /* Language Switcher */
+        .lang-switcher {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .lang-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            color: #00ffff;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .lang-btn:hover {
+            background: rgba(0, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .lang-btn.active {
+            background: linear-gradient(135deg, #00ffff, #00ff88);
+            color: #0a0a0a;
+            border-color: transparent;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .hero-content {
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #00ffff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: #b0b0b0;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #00ffff, #00ff88);
+            color: #0a0a0a;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.4);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: #00ffff;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .profile-image {
+            width: 100%;
+            max-width: 350px;
+            height: 350px;
+            background: linear-gradient(135deg, #00ffff, #00ff88);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0, 255, 255, 0.3);
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            border-color: #00ffff;
+        }
+
+        .skill-card h3 {
+            color: #00ffff;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .skill-bar {
+            background: rgba(255, 255, 255, 0.1);
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .skill-progress {
+            background: linear-gradient(90deg, #00ffff, #00ff88);
+            height: 100%;
+            border-radius: 5px;
+            transition: width 1s ease;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-content h3 {
+            color: #00ffff;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #00ffff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .contact-link:hover {
+            transform: scale(1.1);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            body {
+                cursor: auto;
+            }
+
+            .cursor, .cursor-follower {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <nav>
+        <ul>
+            <li><a href="#home" data-lt="Pradžia" data-en="Home">Pradžia</a></li>
+            <li><a href="#about" data-lt="Apie" data-en="About">Apie</a></li>
+            <li><a href="#skills" data-lt="Įgūdžiai" data-en="Skills">Įgūdžiai</a></li>
+            <li><a href="#projects" data-lt="Projektai" data-en="Projects">Projektai</a></li>
+            <li><a href="#contact" data-lt="Kontaktai" data-en="Contact">Kontaktai</a></li>
+        </ul>
+        <div class="lang-switcher">
+            <button class="lang-btn active" data-lang="lt">LT</button>
+            <button class="lang-btn" data-lang="en">EN</button>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 data-lt="Vardas Pavardė" data-en="Your Name">Vardas Pavardė</h1>
+            <p data-lt="AI Automatizacijos & Programavimo Studentas" data-en="AI Automation & Programming Student">AI Automatizacijos & Programavimo Studentas</p>
+            <a href="#contact" class="cta-button" data-lt="Susisiekime" data-en="Contact Me">Susisiekime</a>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2 data-lt="Apie Mane" data-en="About Me">Apie Mane</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p data-lt="Sveiki! Esu studentas, kuris aktyviai mokosi AI automatizacijos ir programavimo." data-en="Hello! I'm a student actively learning AI automation and programming.">
+                    Sveiki! Esu studentas, kuris aktyviai mokosi AI automatizacijos ir programavimo.
+                </p>
+                <p data-lt="Man patinka kurti sprendimus, kurie padeda automatizuoti kasdienes užduotis ir optimizuoja darbo procesus naudojant dirbtinį intelektą." data-en="I enjoy creating solutions that help automate daily tasks and optimize workflows using artificial intelligence.">
+                    Man patinka kurti sprendimus, kurie padeda automatizuoti kasdienes užduotis ir optimizuoja darbo procesus naudojant dirbtinį intelektą.
+                </p>
+                <p data-lt="Siekiu tapti profesionaliu AI ir automatizacijos specialistu, kuris gali sukurti išmaniąsias sistemas ir efektyvias technologines sistemas." data-en="I aim to become a professional AI and automation specialist who can create intelligent systems and efficient technological solutions.">
+                    Siekiu tapti profesionaliu AI ir automatizacijos specialistu, kuris gali sukurti išmaniąsias sistemas ir efektyvias technologines sistemas.
+                </p>
+            </div>
+            <div class="profile-image">
+                🤖
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2 data-lt="Įgūdžiai" data-en="Skills">Įgūdžiai</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <h3>🤖 AI & Machine Learning</h3>
+                <p>Python, TensorFlow, OpenAI API</p>
+                <div class="skill-bar">
+                    <div class="skill-progress" style="width: 75%"></div>
+                </div>
+            </div>
+            <div class="skill-card">
+                <h3 data-lt="⚙️ Automatizacija" data-en="⚙️ Automation">⚙️ Automatizacija</h3>
+                <p>Python Scripts, API Integration, Automation Tools</p>
+                <div class="skill-bar">
+                    <div class="skill-progress" style="width: 80%"></div>
+                </div>
+            </div>
+            <div class="skill-card">
+                <h3 data-lt="💻 Programavimas" data-en="💻 Programming">💻 Programavimas</h3>
+                <p>Python, JavaScript, React, Node.js</p>
+                <div class="skill-bar">
+                    <div class="skill-progress" style="width: 70%"></div>
+                </div>
+            </div>
+            <div class="skill-card">
+                <h3 data-lt="🗄️ Duomenų Bazės" data-en="🗄️ Databases">🗄️ Duomenų Bazės</h3>
+                <p>SQL, MongoDB, PostgreSQL</p>
+                <div class="skill-bar">
+                    <div class="skill-progress" style="width: 65%"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2 data-lt="Projektai" data-en="Projects">Projektai</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-image">🤖</div>
+                <div class="project-content">
+                    <h3>AI Chatbot</h3>
+                    <p data-lt="Automatinis chatbot klientų aptarnavimui su AI integracija." data-en="Automatic chatbot for customer service with AI integration.">
+                        Automatinis chatbot klientų aptarnavimui su AI integracija.
+                    </p>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">📊</div>
+                <div class="project-content">
+                    <h3 data-lt="Duomenų Analizė" data-en="Data Analysis">Duomenų Analizė</h3>
+                    <p data-lt="Automatizuota duomenų analizės sistema su vizualizacijomis." data-en="Automated data analysis system with visualizations.">
+                        Automatizuota duomenų analizės sistema su vizualizacijomis.
+                    </p>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">⚡</div>
+                <div class="project-content">
+                    <h3 data-lt="Automatizacijos Skriptai" data-en="Automation Scripts">Automatizacijos Skriptai</h3>
+                    <p data-lt="Kasdienių užduočių automatizavimo sprendimai." data-en="Daily task automation solutions.">
+                        Kasdienių užduočių automatizavimo sprendimai.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2 data-lt="Kontaktai" data-en="Contact">Kontaktai</h2>
+        <div class="contact-content">
+            <p data-lt="Norite bendradarbiauti arba turite klausimų? Susisiekite!" data-en="Want to collaborate or have questions? Get in touch!">
+                Norite bendradarbiauti arba turite klausimų? Susisiekite!
+            </p>
+            <div class="contact-links">
+                <a href="mailto:tavo@email.lt" class="contact-link">
+                    📧 Email
+                </a>
+                <a href="https://linkedin.com" class="contact-link" target="_blank">
+                    💼 LinkedIn
+                </a>
+                <a href="https://github.com" class="contact-link" target="_blank">
+                    💻 GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const follower = document.querySelector('.cursor-follower');
+
+        let mouseX = 0, mouseY = 0;
+        let followerX = 0, followerY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+        });
+
+        function animateFollower() {
+            const distX = mouseX - followerX;
+            const distY = mouseY - followerY;
+            
+            followerX += distX * 0.1;
+            followerY += distY * 0.1;
+            
+            follower.style.left = followerX + 'px';
+            follower.style.top = followerY + 'px';
+            
+            requestAnimationFrame(animateFollower);
+        }
+        animateFollower();
+
+        // Click explosion effect
+        document.addEventListener('mousedown', () => {
+            cursor.classList.add('click');
+            setTimeout(() => {
+                cursor.classList.remove('click');
+            }, 500);
+        });
+
+        // Language Switcher
+        const langButtons = document.querySelectorAll('.lang-btn');
+        let currentLang = 'lt';
+
+        langButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.dataset.lang;
+                if (lang === currentLang) return;
+
+                currentLang = lang;
+                
+                // Update active button
+                langButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Update all translatable elements
+                document.querySelectorAll('[data-lt][data-en]').forEach(el => {
+                    if (lang === 'lt') {
+                        el.textContent = el.dataset.lt;
+                    } else {
+                        el.textContent = el.dataset.en;
+                    }
+                });
+            });
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animate skill bars on scroll
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.width = entry.target.style.width;
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.skill-progress').forEach(bar => {
+            observer.observe(bar);
+        });
+    </script>
+</body>
+</html>
