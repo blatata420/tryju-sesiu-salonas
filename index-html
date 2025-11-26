@@ -1,92 +1,11 @@
 <!DOCTYPE html>
-<html lang="lt">
-<head>
+<html>
+  <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tryjų šešių salonas</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background: #111;
-            color: #f5f5f5;
-        }
-        header {
-            padding: 20px;
-            text-align: center;
-            background: #222;
-            border-bottom: 1px solid #444;
-        }
-        header h1 {
-            margin: 0;
-            letter-spacing: 2px;
-        }
-        main {
-            max-width: 900px;
-            margin: 30px auto;
-            padding: 0 20px 40px;
-        }
-        section {
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #333;
-        }
-        h2 {
-            margin-top: 0;
-            color: #ffb347;
-        }
-        ul {
-            padding-left: 20px;
-        }
-        footer {
-            text-align: center;
-            padding: 15px;
-            font-size: 14px;
-            color: #aaa;
-            border-top: 1px solid #333;
-            background: #181818;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>Tryjų šešių salonas</h1>
-        <p>Vieta, kur ateini dėl kirpimo ir išeini su istorija.</p>
-    </header>
-
-    <main>
-        <section>
-            <h2>Apie mus</h2>
-            <p>
-                Čia gali parašyti normalią info apie savo saloną:
-                kas jūs, ką darot, kuo skiriatės nuo eilinio kirpyklos barako.
-            </p>
-        </section>
-
-        <section>
-            <h2>Paslaugos</h2>
-            <ul>
-                <li>Vyriškas kirpimas</li>
-                <li>Barzdos tvarkymas</li>
-                <li>Plaukų dažymas</li>
-                <li>Kita, ką tikrai realiai darot</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>Kontaktai</h2>
-            <p><strong>Adresas:</strong> Čia įrašyk adresą</p>
-            <p><strong>Telefonas:</strong> +370 6xx xxx xx</p>
-            <p><strong>Instagram:</strong> @tavo_salonas</p>
-        </section>
-    </main>
-
-    <footer>
-        © <span id="year"></span> Tryjų šešių salonas
-    </footer>
-
-    <script>
-        document.getElementById("year").textContent = new Date().getFullYear();
-    </script>
-</body>
+    <title>TESTAS</title>
+  </head>
+  <body>
+    <h1>JEI TU MATAI ŠITĄ – VEIKIA</h1>
+    <p>Čia yra testinis tekstas.</p>
+  </body>
 </html>
